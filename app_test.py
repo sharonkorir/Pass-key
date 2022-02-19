@@ -1,5 +1,6 @@
 import unittest
 from user import User #import user class
+from credentials import Credentials # import credentials class 
 
 class TestUser(unittest.TestCase):
 
@@ -16,7 +17,7 @@ class TestUser(unittest.TestCase):
 
     def test_init_(self):
         '''
-        test to see if tge object is initialized properly
+        test to see if the object is initialized properly
         '''
 
         self.assertEqual(self.new_user.full_name, "Jane Doe")
@@ -32,9 +33,41 @@ class TestUser(unittest.TestCase):
         self.new_user.create_account() 
         self.assertEqual(len(User.user_list),1)
 
-    def test_user_login(self):
+    def test_account_login(self):
         '''
         test user login test case to see if user requires credentials'''
+
+        
+
+class TestCredentials(unittest.TestCase):
+
+    '''
+    Test class that defines test cases for the credentials class behavior
+    '''
+
+    def setUp(self):
+        '''
+        Set up method to run before each rest case
+        '''
+
+        self.new_credentials = Credentials("Instagram", "janed03", "password") # create credentials object
+
+    def test_init_(self):
+        '''
+        test to see if the object is initialized properly
+        '''
+
+        self.assertEqual(self.new_credentials.account_name, "Instagram")
+        self.assertEqual(self.new_credentials.account_user_name, "janed03")
+        self.assertEqual(self.new_credentials.account_password, "password")
+
+    def test_save_credentials(self):
+        '''
+        test_save_credentials test case to test if the credentials object is saved into the credentials list
+        '''
+        self.new_credentials.save_credentials() # saving the new contact
+        self.assertEqual(len(Credentials.credentials_list),1)
+
 
 if __name__ == '__main__':
     unittest.main()

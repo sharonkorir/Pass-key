@@ -16,7 +16,7 @@ class User:
         self.user_name = user_name # username or email used to log into the application
         self.password = password
     
-    def create_account(self):
+    def create_account(self): #require user credentials to use Pass-key app
         '''
         create_account method saves user credentials to access Pass-key account 
         '''

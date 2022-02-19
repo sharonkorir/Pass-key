@@ -33,19 +33,26 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.new_user.user_name, "janed03")
         self.assertEqual(self.new_user.password, "password")
 
-    def test_create_account(self):
+    def test_create_user_account(self):
         '''
         test create user test case to see if a new user is saved into the user list
         '''
 
-        self.new_user.create_account() 
+        self.new_user.create_user_account() 
         self.assertEqual(len(User.user_list),1)
 
     def test_account_login(self):
         '''
-        test user login test case to see if user requires credentials'''
+        test user login test case to see if user requires credentials to access passkey account'''
 
-        
+        self.new_user.create_user_account()
+        test_user = User("Jane Doe", "janedoe@email.com", "janed03", "password")
+        test_user.create_user_account()
+
+        confirm_user = User.verify_account("janed03", "password")
+
+        self.assertEqual(confirm_user.user_name, test_user.user_name)
+        self.assertEqual(confirm_user.password, test_user.password)
 
 class TestCredentials(unittest.TestCase):
 

@@ -65,7 +65,7 @@ class TestCredentials(unittest.TestCase):
             '''
             tearDown method that does clean up after each test case has run.
             '''
-            Credentials.credentials_list = []
+            Credentials.accounts_list = []
 
 #other test cases
     def test_init_(self):
@@ -77,22 +77,32 @@ class TestCredentials(unittest.TestCase):
         self.assertEqual(self.new_credentials.account_user_name, "janed03")
         self.assertEqual(self.new_credentials.account_password, "password")
 
-    def test_save_credentials(self):
+    def test_save_accounts(self):
         '''
         test_save_credentials test case to test if the credentials object is saved into the credentials list
         '''
-        self.new_credentials.save_credentials() # saving the new contact
-        self.assertEqual(len(Credentials.credentials_list),1)
+        self.new_credentials.save_accounts()
+        self.assertEqual(len(Credentials.accounts_list),1)
 
-    def test_save_multiple_credentials(self):
+    def test_save_multiple_accounts(self):
         '''
         test to check if we can save multiple credentials
         objects to our credentials_list
         '''
-        self.new_credentials.save_credentials()
+        self.new_credentials.save_accounts()
         test_credentials = Credentials("Instagram", "janed03", "password") # new account credentials
-        test_credentials.save_credentials()
-        self.assertEqual(len(Credentials.credentials_list),2)
+        test_credentials.save_accounts()
+        self.assertEqual(len(Credentials.accounts_list),2)
+
+    def test_delete_accounts(self):
+        '''
+        to test if we can remove an account from our credentials list
+        '''
+        self.new_credentials.save_accounts()
+        test_credentials = Credentials("Instagram", "janed03", "password") # new account credentials
+        test_credentials.save_accounts()
+        self.new_credentials.delete_accounts()
+        self.assertEqual(len(Credentials.accounts_list),1)
 
 if __name__ == '__main__':
     unittest.main()

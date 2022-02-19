@@ -16,3 +16,11 @@ class User:
         self.user_email = user_email
         self.user_name = user_name # username or email used to log into the application
         self.password = password
+    
+    def create_account(self):
+
+        '''
+        create_account method saves user credentials for app account
+        '''
+
+        User.user_list.append(self)

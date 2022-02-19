@@ -8,6 +8,7 @@ class TestUser(unittest.TestCase):
     Test class that defines test cases for the user class behaviors
     '''
 
+#set up and class creation
     def setUp(self):
         '''
         Set up method to run before each rest case
@@ -15,6 +16,13 @@ class TestUser(unittest.TestCase):
 
         self.new_user = User("Jane Doe", "janedoe@email.com", "janed03", "password") # create user object
 
+    def tearDown(self):
+            '''
+            tearDown method that does clean up after each test case has run.
+            '''
+            User.user_list = []
+    
+#other tests
     def test_init_(self):
         '''
         test to see if the object is initialized properly
@@ -45,6 +53,7 @@ class TestCredentials(unittest.TestCase):
     Test class that defines test cases for the credentials class behavior
     '''
 
+#set up and class creation
     def setUp(self):
         '''
         Set up method to run before each rest case
@@ -52,6 +61,13 @@ class TestCredentials(unittest.TestCase):
 
         self.new_credentials = Credentials("Instagram", "janed03", "password") # create credentials object
 
+    def tearDown(self):
+            '''
+            tearDown method that does clean up after each test case has run.
+            '''
+            Credentials.credentials_list = []
+
+#other test cases
     def test_init_(self):
         '''
         test to see if the object is initialized properly
@@ -68,6 +84,15 @@ class TestCredentials(unittest.TestCase):
         self.new_credentials.save_credentials() # saving the new contact
         self.assertEqual(len(Credentials.credentials_list),1)
 
+    def test_save_multiple_credentials(self):
+        '''
+        test to check if we can save multiple credentials
+        objects to our credentials_list
+        '''
+        self.new_credentials.save_credentials()
+        test_credentials = Credentials("Instagram", "janed03", "password") # new account credentials
+        test_credentials.save_credentials()
+        self.assertEqual(len(Credentials.credentials_list),2)
 
 if __name__ == '__main__':
     unittest.main()

@@ -26,10 +26,16 @@ class TestUser(unittest.TestCase):
 
     def test_create_account(self):
         '''
-        test create user test case to see if a new user is saved into the user list'''
+        test create user test case to see if a new user is saved into the user list
+        '''
 
         self.new_user.create_account() 
         self.assertEqual(len(User.user_list),1)
 
+    def test_user_login(self):
+        '''
+        test user login test case to see if user requires credentials'''
+
 if __name__ == '__main__':
     unittest.main()
+    

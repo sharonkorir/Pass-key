@@ -7,7 +7,6 @@ class User:
     user_list = [] #create an empty list of users
 
     def __init__(self, full_name, user_email, user_name, password):
-  
         '''
         this helps define user properties
         '''
@@ -18,9 +17,8 @@ class User:
         self.password = password
     
     def create_account(self):
-
         '''
-        create_account method saves user credentials for app account
+        create_account method saves user credentials to access Pass-key account 
         '''
 
         User.user_list.append(self)

@@ -25,7 +25,7 @@ class Credentials:
 
         Credentials.accounts_list.append(self)
 
-    def delete_accounts(self):
+    def delete_acc(self):
         '''
         this method deletes a saved account from the accounts_list
         '''
@@ -63,7 +63,7 @@ class Credentials:
         account_password = "".join(random_password)
 
         #test if this works
-        print("\n" + account_password)
+        #print("\n" + account_password)
 
         return account_password
 

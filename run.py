@@ -57,12 +57,12 @@ def generate_pwd():
 
     return Credentials.generate_password()
 
-def delete_acc(credentials):
+def delete_acc():
     '''
     Function to delete accounts
     ''' 
 
-    credentials.delete_accounts()
+    return Credentials.delete_acc()
 
 def view_accounts():
     '''
@@ -85,6 +85,7 @@ def main():
 
     while True:
         print("Use these short codes: ca - create new Pass-key account, li -  log in to existing Pass-key account")
+        print("\n")
 
         short_code = input().lower()
 
@@ -95,23 +96,24 @@ def main():
             print("Enter your full name:")
             fullname = input().strip()
 
-            print("Enter your Pass-key account username")
+            print("Enter your Pass-key account username:")
             username = input().strip()
 
-            print("Enter your password")
+            print("Enter your password:")
             password = input().strip()
 
             save_user_acc(create_user_acc(fullname, username, password))#create and save a pass-key account
             print ('\n')
             print(f"Welcome {fullname} to your Pass-key account. Your username is {username}")
             print ('\n')
+            print("Select short code li to log into your account")
             print('-' * 40)
 
         elif short_code == 'li':
-            print("Enter your username")
+            print("Enter your username:")
             login_username = input().strip()
 
-            print("Enter your password")
+            print("Enter your password:")
             login_password = input().strip()
 
             login = verify_acc(login_username, login_password)
@@ -124,12 +126,13 @@ def main():
 
             else:
                 print("Account does not exist, please use ca to create account")
-        
+
         else:
             print("Select appropriate short code")
 
         while True:
             print("Use these short codes: sc - save existing account credentials, cc - create new account credentials, dc - delete credentials, vc - display account credentials, esc - go back to login ")
+            print('-'*40)
             
             short_code = input().lower()
             if short_code == 'sc':
@@ -175,7 +178,7 @@ def main():
 
                 save_acc(create_new_acc(account_name, account_username, account_password))#save new credentials
                 print ('\n')
-                print(f"Your {account_name} account has been created successfuly. Your username is {account_username} and your password in {account_password}")
+                print(f"Your {account_name} account has been created successfuly. Your username is {account_username} and your password is {account_password}")
                 print ('\n')
 
             elif short_code == 'vc':
@@ -184,14 +187,17 @@ def main():
                     print('\n')
 
                     for credentials in view_accounts():
-                        print(f"Account:{credentials.account_name} \n User name: {credentials.account_user_name} \n Password: {credentials.account_password}")
+                        print(f"Account:{credentials.account_name} \n User name: {credentials.account_user_name}, Password: {credentials.account_password}")
+                        print('-'*40)
 
                 else:
+                    print("\n")
                     print("You don't seem to have any saved credentials")
 
             elif short_code == 'dc':
 
                 print("Please enter the account name of the account you want to delete")
+                print("\n")
                 delete_name = input().strip()
                 if find_acc(delete_name):
                     search_acc = find_acc(delete_name)
@@ -203,8 +209,10 @@ def main():
                     print("Account does not exist")
 
             elif short_code == 'esc':
+              print("\n")
               print("Bye....")
               break
+              print("\n")
 
             else:
                 print("Please select a correct short-code")

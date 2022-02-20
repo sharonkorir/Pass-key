@@ -1,4 +1,5 @@
 import unittest
+#import pyperclip #to copy credentials to clipboard
 from user import User #import user class
 from credentials import Credentials # import credentials class 
 
@@ -127,11 +128,16 @@ class TestCredentials(unittest.TestCase):
         self.assertEqual(len(Credentials.accounts_list),2)
 
     def test_view_all_accounts(self):
-      '''
-      method to display a list of all saved accounts and credentials
-      '''
+        '''
+        method to display a list of all saved accounts and credentials
+        '''
 
-      self.assertEqual(Credentials.view_accounts(), Credentials.accounts_list)
+        self.assertEqual(Credentials.view_accounts(), Credentials.accounts_list)
+
+    def test_copy_credentials(self):
+        '''
+        test to confirm user copies account user name and password
+        '''
 
 if __name__ == '__main__':
     unittest.main()

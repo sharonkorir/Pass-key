@@ -1,4 +1,5 @@
 import random, string #to generate random password
+#import pyperclip #attempt copy paste
 
 class Credentials:
 
@@ -62,3 +63,5 @@ class Credentials:
         method that returns the accounts list
         '''
         return cls.accounts_list
+
+    

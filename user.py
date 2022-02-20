@@ -22,6 +22,12 @@ class User:
 
         User.user_list.append(self)
 
+    def sign_in(self):
+        '''
+        create a sign in method
+        '''
+
+
     @classmethod
     def verify_account(cls, username, password):
         '''
@@ -32,10 +38,10 @@ class User:
         Returns :
             account that matches name and password
         '''
-        user_acc = ""
+  
         for user in cls.user_list:
             if user.username == username and user.password == password:
-                return user_acc
+                return user
 
     @classmethod
     def show_user(cls):

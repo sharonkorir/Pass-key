@@ -30,11 +30,9 @@ def show_users():
 #verify and login to account
 def verify_acc(username, password):
     '''
-    Function to log in to account
+    Function to verify account username and password
     '''
-    verify_user = User.verify_account(username, password)
-    return verify_user
-
+    return User.verify_account(username, password)
 
 #credentials part
 def save_acc(credentials):
@@ -80,13 +78,16 @@ def find_acc(credentials):
 
 
 def main():
+    print("\n")
     print("Welcome to Pass-key. Please create an account or sign in")
     print("\n")
 
     while True:
+        print('-'*40)
         print("Use these short codes: ca - create new Pass-key account, li -  log in to existing Pass-key account")
+        print('-'*40)
         print("\n")
-
+    
         short_code = input().lower()
 
         if short_code == 'ca':
@@ -104,119 +105,123 @@ def main():
 
             save_user_acc(create_user_acc(fullname, username, password))#create and save a pass-key account
             print ('\n')
-            print(f"Welcome {fullname} to your Pass-key account. Your username is {username}")
-            print ('\n')
-            print("Select short code li to log into your account")
-            print('-' * 40)
-
+            #print(f"Welcome {fullname} to your Pass-key account. Your username is {username}")
+            #print ('\n')
+            print("Your account has been created. Use li to log in")
+      
         elif short_code == 'li':
+            print("\n")
             print("Enter your username:")
             login_username = input().strip()
-
             print("Enter your password:")
             login_password = input().strip()
 
-            login = verify_acc(login_username, login_password)
-
             #sign in to existing account
-            if verify_acc(login_username, login_password) == login:
+            if verify_acc(login_username, login_password):
+                login = verify_acc(login_username, login_password)
+                login.sign_in()
+                print ('\n')
+                print(f"Welcome to your account {login.username}")
 
-                print(f" \n Welcome to your account {login_username}")
-                print('-' * 40)
+                while True:
+                  print('-'*40)  
+                  print("Use these short codes: sc - save existing account credentials, cc - create new account credentials, dc - delete credentials, vc - display account credentials, esc - go back to login ")
+                  print('-'*40)
+                  print("\n")
+                  
+                  short_code = input().lower()
+                  if short_code == 'sc':
+                      print("Save your existing account credentials")
+                      print("-"*20)
+
+                      print("Enter the account name:")
+                      account_name = input().strip()
+
+                      print("Enter your account username")
+                      account_username = input().strip()
+
+                      print("Enter your account password")
+                      account_password = input().strip()
+
+                      save_acc(create_new_acc(account_name, account_username, account_password))#save existing accounts and credentials
+                      print ('\n')
+                      print(f"Your {account_name} credentials have been saved successfully")
+                      print ('\n')
+
+                  elif short_code == 'cc':
+                      print("Enter new account credentials")
+                      print("-"*20)
+
+                      print("Enter the account name:")
+                      account_name = input().strip()
+
+                      print("Enter your account username:")
+                      account_username = input().strip()
+
+                      print("Use op - to use your own password, rp -to generate a random password")
+                      password_option = input().lower().strip()
+
+                      if password_option == 'op':
+                          print("Enter your account password")
+                          account_password = input().strip()
+
+                      elif password_option == 'rp':
+                          account_password = generate_pwd()
+
+                      else:
+                          print("invalid choice, please select 'op' or 'rp'")
+
+                      save_acc(create_new_acc(account_name, account_username, account_password))#save new credentials
+                      print ('\n')
+                      print(f"Your {account_name} account has been created successfuly. Your username is {account_username} and your password is {account_password}")
+                      
+
+                  elif short_code == 'vc':
+                      if view_accounts():
+                          print("Here is a list of all your accounts:")
+                          print("-"*20)
+                          print('\n')
+
+                          for credentials in view_accounts():
+                              print('\n')
+                              print(f"Account:{credentials.account_name} \n User name: {credentials.account_user_name}, Password: {credentials.account_password}")
+
+                      else:
+                          print("\n")
+                          print("You don't seem to have any saved credentials")
+
+                  elif short_code == 'dc':
+
+                      print("Please enter the account name of the account you want to delete")
+                      print("-"*20)
+                      delete_name = input().strip()
+                      if find_acc(delete_name):
+                          search_acc = find_acc(delete_name)
+                          search_acc.delete_acc()
+                          print(f"Your {search_acc.account_name} account credentials have been deleted")
+
+                      else:
+                          print("Account does not exist")
+
+                  elif short_code == 'esc':
+                    print("Bye...")
+                    break
+
+                  else:
+                      print ('\n')
+                      print("Please select a correct short-code")
+
 
             else:
-                print("Account does not exist, please use ca to create account")
+                print ('\n')
+                print("Account invalid. Confirm your password. Or use ca to create an account")
 
         else:
+            print ('\n')
             print("Select appropriate short code")
+            break
 
-        while True:
-            print("Use these short codes: sc - save existing account credentials, cc - create new account credentials, dc - delete credentials, vc - display account credentials, esc - go back to login ")
-            print('-'*40)
-            
-            short_code = input().lower()
-            if short_code == 'sc':
-                print("Save your existing account credentials")
-                print("-"*20)
-
-                print("Enter the account name:")
-                account_name = input().strip()
-
-                print("Enter your account username")
-                account_username = input().strip()
-
-                print("Enter your account password")
-                account_password = input().strip()
-
-                save_acc(create_new_acc(account_name, account_username, account_password))#save existing accounts and credentials
-                print ('\n')
-                print(f"Your {account_name} credentials have been saved successfully")
-                print ('\n')
-
-            elif short_code == 'cc':
-                print("Enter new account credentials")
-                print("-"*20)
-
-                print("Enter the account name:")
-                account_name = input().strip()
-
-                print("Enter your account username:")
-                account_username = input().strip()
-
-                print("Use op - to use your own password, rp -to generate a random password")
-                password_option = input().lower().strip()
-
-                if password_option == 'op':
-                    print("Enter your account password")
-                    account_password = input().strip()
-
-                elif password_option == 'rp':
-                    account_password = generate_pwd()
-
-                else:
-                    print("invalid choice, please select 'op' or 'rp'")
-
-                save_acc(create_new_acc(account_name, account_username, account_password))#save new credentials
-                print ('\n')
-                print(f"Your {account_name} account has been created successfuly. Your username is {account_username} and your password is {account_password}")
-                print ('\n')
-
-            elif short_code == 'vc':
-                if view_accounts():
-                    print("Here is a list of all your accounts:")
-                    print('\n')
-
-                    for credentials in view_accounts():
-                        print(f"Account:{credentials.account_name} \n User name: {credentials.account_user_name}, Password: {credentials.account_password}")
-                        print('-'*40)
-
-                else:
-                    print("\n")
-                    print("You don't seem to have any saved credentials")
-
-            elif short_code == 'dc':
-
-                print("Please enter the account name of the account you want to delete")
-                print("\n")
-                delete_name = input().strip()
-                if find_acc(delete_name):
-                    search_acc = find_acc(delete_name)
-                    print("-"*40)
-                    search_acc.delete_acc()
-                    print(f"\n Your {search_acc.account_name} account credentials have been deleted")
-
-                else:
-                    print("Account does not exist")
-
-            elif short_code == 'esc':
-              print("\n")
-              print("Bye....")
-              break
-              print("\n")
-
-            else:
-                print("Please select a correct short-code")
-
+        
 
 if __name__ == '__main__':
 

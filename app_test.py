@@ -111,6 +111,16 @@ class TestCredentials(unittest.TestCase):
         self.new_credentials.delete_accounts()
         self.assertEqual(len(Credentials.accounts_list),1)
 
+    def test_create_new_account(self):
+        '''
+        to test if user can create new credentials
+        '''
+        self.new_credentials.save_accounts()
+        test_credentials = Credentials("Instagram", "janed03", "password") # new account credentials
+        test_credentials.generate_password()
+        test_credentials.save_accounts()
+        self.assertEqual(len(Credentials.accounts_list),2)
+
 if __name__ == '__main__':
     unittest.main()
     

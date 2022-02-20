@@ -43,12 +43,17 @@ class TestUser(unittest.TestCase):
 
     def test_account_login(self):
         '''
-        test user login test case to see if user requires credentials to access passkey account'''
+        test user login test case to see if user requires credentials to access passkey account; user account exists'''
 
         self.new_user.create_user_account()
         test_user = User("Jane Doe", "janedoe@email.com", "janed03", "password")
         test_user.create_user_account()
 
+        #confirm whether user account exists
+        account_exists = User.user_exists("janed03")
+        self.assertTrue(account_exists)
+
+        #verify username and password
         confirm_user = User.verify_account("janed03", "password")
 
         self.assertEqual(confirm_user.user_name, test_user.user_name)

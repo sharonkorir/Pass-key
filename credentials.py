@@ -38,6 +38,8 @@ class Credentials:
         #get desired password length
         password_length = int(input("\n Enter the length of your password: "))
 
+        #limit password length to 15 characters?
+
         #define data
         upper = string.ascii_uppercase
         lower = string.ascii_lowercase

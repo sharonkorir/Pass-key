@@ -37,3 +37,18 @@ class User:
         for user in cls.user_list:
             if user.user_name == user_name and user.password == password:
                 return user
+
+    @classmethod
+    def user_exists(cls,user_name):
+        '''
+        Method that checks if a pass-key account exists from the user list.
+        Args:
+            user_name: to search if it user acc exists
+        Returns :
+            Boolean: True or false depending if the acc exists
+        '''
+        for user in cls.user_list:
+            if user.user_name == user_name:
+                    return True
+
+        return False

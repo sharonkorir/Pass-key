@@ -11,8 +11,8 @@ class User:
         this helps define user properties
         '''
 
-        self.full_name = fullname
-        self.user_name = username # username or email used to log into the application
+        self.fullname = fullname
+        self.username = username # username or email used to log into the application
         self.password = password
     
     def save_user_account(self): #add user to user list
@@ -34,7 +34,7 @@ class User:
         '''
         user_acc = ""
         for user in cls.user_list:
-            if user.username == username and user.password == password:
+            if user.login_username == username and user.login_password == password:
                 return user_acc
 
     @classmethod

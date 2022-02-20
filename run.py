@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.8
 
+from click import password_option
 from user import User
 from credentials import Credentials
 
@@ -36,23 +37,15 @@ def verify_acc(username, password):
 
 
 #credentials part
-def save_acc(account_name, account_user_name, account_password):
+def save_acc(credentials):
     '''
-    function to save existing account credentials
+    function to save existing account credentials to accounts list
     '''
-    new_credentials = Credentials(account_name, account_user_name, account_password)
-    return new_credentials
+    credentials.save_accounts()
 
 def create_new_acc(account_name, account_user_name, account_password):
     '''
     function to create new account with existing password
-    '''
-    new_credentials = Credentials(account_name, account_user_name, account_password)
-    return new_credentials
-
-def create_new_acc_password(account_name, account_user_name, account_password):
-    '''
-    function to create new account and generate password
     '''
     new_credentials = Credentials(account_name, account_user_name, account_password)
     return new_credentials
@@ -62,7 +55,8 @@ def generate_pwd(credentials):
     Function to generate random password
     '''
 
-    credentials.generate_password()
+    random_pwd = credentials.generate_password()
+    return random_pwd
 
 def delete_acc(credentials):
     '''
@@ -85,7 +79,7 @@ def main():
 
     while True:
 
-        print("Use these short codes: ca - create new Pass-key account, li -  log in to existing Pass-key account, esc - sign out of your account:")
+        print("Use these short codes: ca - create new Pass-key account, li -  log in to existing Pass-key account")
 
         short_code = input().lower()
 
@@ -122,14 +116,70 @@ def main():
             if verify_acc(login_username, login_password) == login:
 
                 print(f"Welcome to your account {login_username}")
-                print('-' * 20)
-        
-        elif short_code == 'esc':
-            print("You will be signed out shortly")
-            break  
+                print('-' * 40)
+
+            else:
+                print("Account does not exist, please use ca to create account")
+
+        while True:
+            print("Use these short codes: sc - save existing account credentials, cc - create new account credentials, dc - delete credentials, vc - display account credentials ")
+            
+            short_code = input().lower()
+            if short_code == 'sc':
+                print("Save your existing account credentials")
+                print("-"*20)
+
+                print("Enter the account name:")
+                account_name = input().strip()
+
+                print("Enter your account username")
+                account_username = input().strip()
+
+                print("Enter your account password")
+                account_password = input().strip()
+
+                save_acc(create_new_acc(account_name, account_username, account_password))#save existing accounts and credentials
+                print ('\n')
+                print(f"Your {account_name} credentials have been saved successfully")
+                print ('\n')
+
+            elif short_code == 'cc':
+                print("Enter new account credentials")
+                print("-"*20)
+
+                print("Enter the account name:")
+                account_name = input().strip()
+
+                print("Enter your account username:")
+                account_username = input().strip()
+
+                print("Use op - to use your own password, rp -to generate a random password")
+                password_option = input().lower().strip()
+
+                if password_option == 'op':
+                    print("Enter your account password")
+                    account_password = input().strip()
+
+                elif password_option == 'rp':
+                    account_password = generate_pwd()
+
+                else:
+                    print("invalid choice, please select 'op' or 'rp'")
+
+                save_acc(create_new_acc(account_name, account_username, account_password))#save new credentials
+                print ('\n')
+                print(f"Your {account_name} account has been created successfuly. Your usernam is {account_username} and your password in {account_password}")
+                print ('\n')
+
+            elif short_code == 'dc':
+
+              print("Select the account you want to delete")
+
+            
 
         else:
             print("Please use the appropriate short codes")
+            print("-"*20)
 
 
 if __name__ == '__main__':

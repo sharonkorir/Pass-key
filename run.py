@@ -50,13 +50,12 @@ def create_new_acc(account_name, account_user_name, account_password):
     new_credentials = Credentials(account_name, account_user_name, account_password)
     return new_credentials
 
-def generate_pwd(credentials):
+def generate_pwd():
     '''
     Function to generate random password
     '''
 
-    random_pwd = credentials.generate_password()
-    return random_pwd
+    return Credentials.generate_password()
 
 def delete_acc(credentials):
     '''
@@ -169,7 +168,7 @@ def main():
                     account_password = input().strip()
 
                 elif password_option == 'rp':
-                    generate_pwd(account_password)
+                    account_password = generate_pwd()
 
                 else:
                     print("invalid choice, please select 'op' or 'rp'")

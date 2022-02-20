@@ -39,7 +39,8 @@ class Credentials:
 
         Credentials.accounts_list.append(self)
     
-    def generate_password(self):
+    @classmethod
+    def generate_password(cls):
         '''
         this method generates a random user password using string and random modules
         '''

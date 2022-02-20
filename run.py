@@ -65,7 +65,7 @@ def delete_acc(credentials):
 
     credentials.delete_accounts()
 
-def view_acc():
+def view_accounts():
     '''
     Function to display saved accounts
     '''
@@ -85,14 +85,13 @@ def main():
     print("\n")
 
     while True:
-
         print("Use these short codes: ca - create new Pass-key account, li -  log in to existing Pass-key account")
 
         short_code = input().lower()
 
         if short_code == 'ca':
             print("New Account")
-            print("-"*20)
+            print("-"*50)
 
             print("Enter your full name:")
             fullname = input().strip()
@@ -105,10 +104,9 @@ def main():
 
             save_user_acc(create_user_acc(fullname, username, password))#create and save a pass-key account
             print ('\n')
-            print(f"New Passkey Account for {fullname} created successfuly! Your username is {username}")
+            print(f"Welcome {fullname} to your Pass-key account. Your username is {username}")
             print ('\n')
-
-            print("Please use the li short code to log into your pass key account")
+            print('-' * 40)
 
         elif short_code == 'li':
             print("Enter your username")
@@ -122,14 +120,17 @@ def main():
             #sign in to existing account
             if verify_acc(login_username, login_password) == login:
 
-                print(f"Welcome to your account {login_username}")
+                print(f" \n Welcome to your account {login_username}")
                 print('-' * 40)
 
             else:
                 print("Account does not exist, please use ca to create account")
+        
+        else:
+            print("Select appropriate short code")
 
         while True:
-            print("Use these short codes: sc - save existing account credentials, cc - create new account credentials, dc - delete credentials, vc - display account credentials ")
+            print("Use these short codes: sc - save existing account credentials, cc - create new account credentials, dc - delete credentials, vc - display account credentials, esc - go back to login ")
             
             short_code = input().lower()
             if short_code == 'sc':
@@ -168,7 +169,7 @@ def main():
                     account_password = input().strip()
 
                 elif password_option == 'rp':
-                    account_password = generate_pwd()
+                    generate_pwd(account_password)
 
                 else:
                     print("invalid choice, please select 'op' or 'rp'")
@@ -179,14 +180,15 @@ def main():
                 print ('\n')
 
             elif short_code == 'vc':
-                if view_acc():
-                    print("This is a list of your accounts:")
-                    print('-'*40)
-                    for accounts in view_acc():
-                        print(f"Account:{account_name} \n User name: {account_username} \n Password: {account_password}")
+                if view_accounts():
+                    print("Here is a list of all your accounts:")
+                    print('\n')
+
+                    for credentials in view_accounts():
+                        print(f"Account:{credentials.account_name} \n User name: {credentials.account_user_name} \n Password: {credentials.account_password}")
 
                 else:
-                    print("Account does not exist")
+                    print("You don't seem to have any saved credentials")
 
             elif short_code == 'dc':
 
@@ -197,12 +199,16 @@ def main():
                     print("-"*40)
                     search_acc.delete_acc()
                     print(f"\n Your {search_acc.account_name} account credentials have been deleted")
-                    
+
                 else:
                     print("Account does not exist")
-        else:
-            print("Please use the appropriate short codes")
-            print("-"*20)
+
+            elif short_code == 'esc':
+              print("Bye....")
+              break
+
+            else:
+                print("Please select a correct short-code")
 
 
 if __name__ == '__main__':

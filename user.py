@@ -34,7 +34,7 @@ class User:
         '''
         user_acc = ""
         for user in cls.user_list:
-            if user.login_username == username and user.login_password == password:
+            if user.username == username and user.password == password:
                 return user_acc
 
     @classmethod

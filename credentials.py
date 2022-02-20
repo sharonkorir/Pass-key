@@ -31,6 +31,13 @@ class Credentials:
         '''
 
         Credentials.accounts_list.remove(self)
+
+    def create_new_account(self): #create new credentials
+        '''
+        this method creates and saves new credentials
+        '''
+
+        Credentials.accounts_list.append(self)
     
     def generate_password(self):
         '''

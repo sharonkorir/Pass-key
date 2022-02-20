@@ -65,12 +65,19 @@ def delete_acc(credentials):
 
     credentials.delete_accounts()
 
-def view_acc(credentials):
+def view_acc():
     '''
     Function to display saved accounts
     '''
 
     return Credentials.view_accounts()
+
+def find_acc(credentials):
+    '''
+    Function to search existing account credentials
+    '''
+
+    return Credentials.find_account(credentials)
 
 
 def main():
@@ -168,15 +175,31 @@ def main():
 
                 save_acc(create_new_acc(account_name, account_username, account_password))#save new credentials
                 print ('\n')
-                print(f"Your {account_name} account has been created successfuly. Your usernam is {account_username} and your password in {account_password}")
+                print(f"Your {account_name} account has been created successfuly. Your username is {account_username} and your password in {account_password}")
                 print ('\n')
+
+            elif short_code == 'vc':
+                if view_acc():
+                    print("This is a list of your accounts:")
+                    print('-'*40)
+                    for accounts in view_acc():
+                        print(f"Account:{account_name} \n User name: {account_username} \n Password: {account_password}")
+
+                else:
+                    print("Account does not exist")
 
             elif short_code == 'dc':
 
-              print("Select the account you want to delete")
-
-            
-
+                print("Please enter the account name of the account you want to delete")
+                delete_name = input().strip()
+                if find_acc(delete_name):
+                    search_acc = find_acc(delete_name)
+                    print("-"*40)
+                    search_acc.delete_acc()
+                    print(f"\n Your {search_acc.account_name} account credentials have been deleted")
+                    
+                else:
+                    print("Account does not exist")
         else:
             print("Please use the appropriate short codes")
             print("-"*20)

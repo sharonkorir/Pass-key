@@ -6,17 +6,16 @@ class User:
 
     user_list = [] #create an empty list of users
 
-    def __init__(self, full_name, user_email, user_name, password):
+    def __init__(self, fullname, username, password):
         '''
         this helps define user properties
         '''
 
-        self.full_name = full_name
-        self.user_email = user_email
-        self.user_name = user_name # username or email used to log into the application
+        self.full_name = fullname
+        self.user_name = username # username or email used to log into the application
         self.password = password
     
-    def create_user_account(self): #require user credentials to use Pass-key app
+    def save_user_account(self): #add user to user list
         '''
         create_account method saves user credentials to access Pass-key account 
         '''
@@ -24,31 +23,24 @@ class User:
         User.user_list.append(self)
 
     @classmethod
-    def verify_account(cls,user_name, password):
+    def verify_account(cls, username, password):
         '''
-        Method that takes in credentials and returns a user account that matches credentials
+        Method that checks if user account exists then logs in
 
         Args:
             username and password to verify user
         Returns :
-            Pass-key account that matches user and password
+            account that matches name and password
         '''
-
+        user_acc = ""
         for user in cls.user_list:
-            if user.user_name == user_name and user.password == password:
-                return user
+            if user.username == username and user.password == password:
+                return user_acc
 
     @classmethod
-    def user_exists(cls,user_name):
+    def show_user(cls):
         '''
-        Method that checks if a pass-key account exists from the user list.
-        Args:
-            user_name: to search if it user acc exists
-        Returns :
-            Boolean: True or false depending if the acc exists
+        Method that shows existing users
         '''
-        for user in cls.user_list:
-            if user.user_name == user_name:
-                    return True
 
-        return False
+        return cls.user_list

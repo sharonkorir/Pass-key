@@ -30,35 +30,36 @@ class TestUser(unittest.TestCase):
         '''
 
         self.assertEqual(self.new_user.full_name, "Jane Doe")
-        self.assertEqual(self.new_user.user_email, "janedoe@email.com")
-        self.assertEqual(self.new_user.user_name, "janed03")
+        self.assertEqual(self.new_user.username, "janed03")
         self.assertEqual(self.new_user.password, "password")
 
-    def test_create_user_account(self):
+    def test_save_user_account(self):
         '''
-        test create user test case to see if a new user is saved into the user list
+        test save user test case to see if a new user is saved into the user list
         '''
 
-        self.new_user.create_user_account() 
+        self.new_user.save_user_account() 
         self.assertEqual(len(User.user_list),1)
 
     def test_account_login(self):
         '''
-        test user login test case to see if user requires credentials to access passkey account; user account exists'''
+        test user login test case to see if user login credentials exist
+        '''
 
         self.new_user.create_user_account()
         test_user = User("Jane Doe", "janedoe@email.com", "janed03", "password")
         test_user.create_user_account()
 
         #confirm whether user account exists
-        account_exists = User.user_exists("janed03")
-        self.assertTrue(account_exists)
+        found_account = User.verify_account("janed03", "password")
+        self.assertEqual(found_account.username, test_user.username)
+        self.assertEqual(found_account.password, test_user.password)
 
         #verify username and password for login
-        confirm_user = User.verify_account("janed03", "password")
+        #log_in = User.verify_account("janed03", "password")
 
-        self.assertEqual(confirm_user.user_name, test_user.user_name)
-        self.assertEqual(confirm_user.password, test_user.password)
+        #self.assertEqual(log_in.user_name, test_user.user_name)
+        #self.assertEqual(log_in.password, test_user.password)
 
 class TestCredentials(unittest.TestCase):
 

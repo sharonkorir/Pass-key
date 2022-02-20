@@ -53,7 +53,7 @@ class TestUser(unittest.TestCase):
         account_exists = User.user_exists("janed03")
         self.assertTrue(account_exists)
 
-        #verify username and password
+        #verify username and password for login
         confirm_user = User.verify_account("janed03", "password")
 
         self.assertEqual(confirm_user.user_name, test_user.user_name)
@@ -125,6 +125,13 @@ class TestCredentials(unittest.TestCase):
         test_credentials.generate_password()
         test_credentials.save_accounts()
         self.assertEqual(len(Credentials.accounts_list),2)
+
+    def test_view_all_accounts(self):
+      '''
+      method to display a list of all saved accounts and credentials
+      '''
+
+      self.assertEqual(Credentials.view_accounts(), Credentials.accounts_list)
 
 if __name__ == '__main__':
     unittest.main()

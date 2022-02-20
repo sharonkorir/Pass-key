@@ -55,3 +55,10 @@ class Credentials:
 
         #test if this works
         print("\n" + account_password)
+
+    @classmethod
+    def view_accounts(cls):
+        '''
+        method that returns the accounts list
+        '''
+        return cls.accounts_list
